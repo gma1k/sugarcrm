@@ -1,6 +1,0 @@
-apps:
-  - name: app1
-    script: ./app.js
-    env:
-      http_proxy: http://proxy.example.com:8080/
-      https_proxy: https://proxy.example.com:8080/
