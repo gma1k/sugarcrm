@@ -4,6 +4,7 @@ RUN addgroup --system shared-folder \
  && adduser --system --home /var/cache/shared-folder --group shared-folder --uid 1001
 
 EXPOSE 80/tcp
+EXPOSE 443/tcp
 
 ENV NODE_ENV=dev
 
