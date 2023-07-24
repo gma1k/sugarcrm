@@ -1,0 +1,14 @@
+apps:
+  - name: app1
+    script: ./app.js
+    instances: 4
+    exec_mode: cluster
+    env:
+      NODE_ENV: production
+  - name: app2
+    script: ./worker.js
+    exec_mode: fork
+    watch: true
+    ignore_watch:
+      - node_modules
+      - logs
