@@ -1,0 +1,6 @@
+# Set environment variables
+ENV DB_HOST=mysql.example.com
+ENV DB_PORT=3306
+ENV DB_NAME=sugarcrm
+ENV DB_USER=sugarcrm
+ENV DB_PASSWORD=sugarcrm
