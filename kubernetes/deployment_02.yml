@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sugarcrm-apache
+  labels:
+    app: sugarcrm-apache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sugarcrm-apache
+  template:
+    metadata:
+      labels:
+        app: sugarcrm-apache
+    spec:
+      containers:
+      - name: sugarcrm-apache
+        image: your-registry/sugarcrm
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        env:
+        - name: DB_HOST
+          value: your-db-host
+        - name: DB_PORT
+          value: your-db-port
+        - name: DB_NAME
+          value: your-db-name
+        - name: DB_USER
+          value: your-db-user
+        - name: DB_PASSWORD
+          value: your-db-password
