@@ -58,4 +58,4 @@ ProxyPassReverse / http://localhost:8080/
 
 USER 1001
 
-CMD [ "sh", "-c", "service apache2 start ; pm2-runtime process.yml --no-daemon" ]
+CMD [ "sh", "-c", "service apache2 start ; --no-daemon" ]
