@@ -1,0 +1,49 @@
+resources:
+- name: source-code
+  type: git
+  source:
+    uri: https://github.com/your-repo/sugarcrm.git
+    branch: main
+
+- name: docker-image
+  type: docker-image
+  source:
+    repository: your-registry/sugarcrm
+    username: ((docker-username))
+    password: ((docker-password))
+
+- name: cf
+  type: cf
+  source:
+    api: https://api.your-cloudfoundry.com
+    username: ((cf-username))
+    password: ((cf-password))
+    organization: your-org
+    space: your-space
+    skip_cert_check: false
+
+jobs:
+- name: build-and-push-image
+  plan:
+  - get: source-code
+    trigger: true
+  - put: docker-image
+    params:
+      build: source-code
+
+- name: deploy-to-cf
+  plan:
+  - get: docker-image
+    trigger: true
+    passed:
+    - build-and-push-image
+  - put: cf
+    params:
+      manifest: source-code/manifest.yml
+      docker_image: docker-image/repository@digest
+      environment_variables:
+        DB_HOST: ((db-host))
+        DB_PORT: ((db-port))
+        DB_NAME: ((db-name))
+        DB_USER: ((db-user))
+        DB_PASSWORD: ((db-password))
