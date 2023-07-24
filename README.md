@@ -28,6 +28,7 @@ A repository of SugarCRM deployments on k8s & CloudFoundry using concourse.
 - **Kubernetes deployment**
 - **CloudFoundry deployment**
 - **docker**
+- **Database creation**
 - **Database configuration**
 
 ## Usage
