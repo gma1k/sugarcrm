@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  sugarcrm:
+    image: sugarcrm/sugarcrm:12.0.0
+    command: apache2-foreground
+    depends_on
+      - mysql
+      - elasticsearch
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "80:80"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=sugarcrm 
+      - DB_PASSWORD=sugarcrm
+      - DB_NAME=sugarcrm
+      - DB_TYPE=mysql
+      - DB_TCP_PORT=3306
+      - DB_MANAGER=MysqlManager
+      - SUGAR_FTS_HOST=elasticsearch
+      - SUGAR_FTS_PORT=9200
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=sugarcrm
+      - MYSQL_PASSWORD=sugarcrm
+      - MYSQL_DATABASE=sugarcrm
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  elasticsearch:
+    image: elasticsearch:7.15.2
+    ports:
+      - "9200:9200"
+
+volumes:
+  mysql-data:
