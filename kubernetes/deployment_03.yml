@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sugarcrm-deployment
+spec:
+  selector:
+    matchLabels:
+      app: sugarcrm
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sugarcrm
+    spec:
+      containers:
+      - name: sugarcrm
+        image: sugarcrm/sugarcrm:12.0.0
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: host
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: database
+        volumeMounts:
+        - name: sugarcrm-data
+          mountPath: /var/www/html/data/app/sugar
+      volumes:
+      - name: sugarcrm-data
+        persistentVolumeClaim:
+          claimName: sugarcrm-pvc

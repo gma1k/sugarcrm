@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sugarcrm-apache
+  name: sugarcrm
   labels:
-    app: sugarcrm-apache
+    app: sugarcrm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sugarcrm-apache
+      app: sugarcrm
   template:
     metadata:
       labels:
-        app: sugarcrm-apache
+        app: sugarcrm
     spec:
       containers:
-      - name: sugarcrm-apache
+      - name: sugarcrm
         image: your-registry/sugarcrm
         ports:
         - containerPort: 80
