@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sugarcrm-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: sugarcrm-tls
+spec:
+  tls:
+  - hosts:
+    - sugarcrm.example.com
+    secretName: sugarcrm-tls
+  rules:
+  - host: sugarcrm.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sugarcrm-service
+            port:
+              number: 80
